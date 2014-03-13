@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name        = 'iso_view'
   s.version     = IsoView::VERSION
   s.date        = '2014-03-13'
-  s.summary     = "Sinatra iso codes"
+  s.summary     = "iso_view country"
   s.description = "Sinatra iso codes"
   s.authors     = ["Mike Bard"]
   s.email       = 'mibamur@gmail.com'
@@ -19,13 +19,14 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
-  s.add_dependency "sinatra"
-  s.add_dependency "json"
-  s.add_dependency "country"
-  s.add_dependency "vegas"
+  s.add_dependency "sinatra", "~> 1.4"
+  s.add_dependency "sinatra-contrib", "~> 1.4"
+  s.add_dependency "json", "~> 1.8"
+  s.add_dependency "countries", "~> 0.9"
+  s.add_dependency "vegas", "~> 0.1"
 
-  s.add_development_dependency "bundler", ">= 1.5"
-  s.add_development_dependency "rails", ">= 4.0"
-  s.add_development_dependency "rake"
+  s.add_development_dependency "bundler", "~> 1.5"
+  s.add_development_dependency "rails", "~> 4.0"
+  s.add_development_dependency "rake", "~> 10.1"
 end
 
