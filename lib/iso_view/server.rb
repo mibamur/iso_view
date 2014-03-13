@@ -1,25 +1,25 @@
-require 'countries'
+# encoding: utf-8
+
+# require 'json'
+# require 'sinatra'
+# require "sinatra/activerecord"
+# require 'countries'
+
+
+set :database, "sqlite3:///db/zipcodes.db"
+ActiveRecord::Base.include_root_in_json = false
+
+class Zipcode < ActiveRecord::Base
+  # extend IndexSearchable
+  # self.primary_key = 'index'
+end
+
 
 module IsoView
 
   class Server < Sinatra::Base
 
-  info=<<-CODE
-{
-    countries:
-    'get "/iso/countries/:lang?" do
-      countries params[:lang]
-    end',
-    subdivisions:
-    'get "/iso/subdivisions/:country/:lang?" do
-      subdivision params[:country],params[:lang]
-    end',
-    cities:
-    'get "/iso/cities/:country/:subdivision/" do
-      cities params[:country], params[:subdivision]
-    end'
-}
-  CODE
+    # register Sinatra::ActiveRecordExtension
 
     root = File.dirname(File.expand_path(__FILE__))
     set :root, root
@@ -78,7 +78,7 @@ module IsoView
         t2=t1[0..-14]
         filess[t2]=e
       end
-      
+
       return File.read(filess[subdiv])
     end
 
@@ -86,37 +86,68 @@ module IsoView
 
     get "/" do
       content_type :json
-      countries params[:lang]
+      return { "database.putZipcode" => "?params[:zipcode]",
+               "database.getCountries" => "?params[:locale]",
+               "database.getSubdivisions" => "?params[:country]&params[:locale]",
+               "database.getCities" => "?params[:country]&params[:subdivision]"}.to_json
     end
 
-    get "/countries/:lang?" do
+
+    get "/zipcode/city/:start" do
       content_type :json
-      countries params[:lang]
+      @z_all={}
+      l_name_var = "#{params[:start]}"
+      @all=Zipcode.where("zipcodes.city LIKE :l_name", {:l_name => "#{l_name_var}%"}).limit(500)
+      @z_all=@all
+      return @z_all.to_json(only: [:index, :region, :autonom, :area, :city, :city2])
     end
 
-    get "/subdivisions/:country/:lang?" do
+
+    get "/zipcode/city2/:start" do
       content_type :json
-      subdivision params[:country],params[:lang]
+      @z_all={}
+      l_name_var = "#{params[:start]}"
+      @all=Zipcode.where("zipcodes.city2 LIKE :l_name", {:l_name => "#{l_name_var}%"}).limit(500)
+      @z_all=@all
+      return @z_all.to_json(only: [:index, :region, :autonom, :area, :city, :city2])
     end
 
-    get "/cities/:country/:subdivision/:lang?" do
-      # root
-      # content_type :json
-      cities params[:country], params[:subdivision]
+# search_by("zipcode", { params[:zipcode], params[:country], params[:subdivision], params[:area], params[:city], params[:city2], params[:locale] })
+
+    get "/:start" do
+      content_type :json
+  
+      case params[:start]
+        when "database.putZipcode"
+          l_name_var = "#{params[:zipcode]}"
+          @all=Zipcode.where("\"index\" LIKE :l_name", {:l_name => "#{l_name_var}%"})
+          return @all.to_json(only: [:index, :region, :autonom, :area, :city, :city2])
+
+        when "database.getCountries"
+          countries params[:locale]
+
+        when "database.getSubdivisions"
+          subdivision params[:country],params[:locale]
+
+        when "database.getCities"
+          cities params[:country], params[:subdivision]
+
+      end
+  
     end
 
-    # get "/iso/cities/:country/:subdivision/:lang?" do
-    #   # root
-    #   content_type :json
-    #   cities params[:country], params[:subdivision]
-    # end
+
+    post "/zipcode" do
+      zipcode     = params[:zipcode]
+      region      = params[:region]
+      autonom     = params[:autonom]
+      area        = params[:area]
+      city        = params[:city]
+      city2       = params[:city2]
+    end
 
 
-    # get "/iso/:country?/:subdivision?" do
-    #   # content_type :json
-    #   cities params[:country], params[:subdivision]
-    #   # root
-    # end
+
 
 
     def url_path(*path_parts)

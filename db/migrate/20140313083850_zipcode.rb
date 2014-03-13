@@ -1,4 +1,4 @@
-class Zipcode < ActiveRecord::Migration
+class Zipcodes < ActiveRecord::Migration
   def change
   end
 end

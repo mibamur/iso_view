@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
 
-gem "sinatra"
 gem "sqlite3"
-gem "activerecord"
+gem "sinatra"
 gem "sinatra-activerecord"
+
+# gem 'jbuilder'
 
 group :development do
   gem "shotgun"
@@ -12,3 +13,4 @@ end
 
 # Specify your gem's dependencies in iso_view.gemspec
 gemspec
+

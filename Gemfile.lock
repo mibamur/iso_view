@@ -46,6 +46,9 @@ GEM
     erubis (2.7.0)
     hike (1.2.3)
     i18n (0.6.9)
+    jbuilder (1.5.3)
+      activesupport (>= 3.0.0)
+      multi_json (>= 1.2.0)
     json (1.8.1)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -127,9 +130,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord
   bundler (~> 1.5)
   iso_view!
+  jbuilder
   rails (~> 4.0)
   rake (~> 10.1)
   shotgun
