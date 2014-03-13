@@ -2,15 +2,17 @@ Iso View
 ===============
 A Sinatra app to get ISO codes query that can be embedded in a Rails app.
 
-What it is?
-countries       - 3166 (all lang avalable at gem countries)
-subdivisions    - 3166-2 (на русском)
-cities          - parse from api.vk.com
+#### What it is?
 
-Why I need it?
-1) small embedded and standalone app
-2) use it with my cascade select2
-3) learn how to integrate sinatra in rails
+* countries       - 3166 (all lang avalable at gem countries)
+* subdivisions    - 3166-2 (на русском)
+* cities          - parse from api.vk.com
+
+#### Why I need it?
+
+* small embedded and standalone app
+* use it with my cascade select2
+* learn how to integrate sinatra in rails
 
 
 Configuration
