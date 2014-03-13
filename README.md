@@ -1,9 +1,19 @@
-[![Build Status](https://secure.travis-ci.org/denniskuczynski/beanstalkd_view.png?branch=master)](http://travis-ci.org/denniskuczynski/beanstalkd_view)
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/denniskuczynski/beanstalkd_view)
-
 Iso View
 ===============
-A Sinatra app to view/manage beanstalkd queues that can be embedded in a Rails app similar to what's available in Resque.
+A Sinatra app to get ISO codes query that can be embedded in a Rails app.
+
+#### What it is?
+
+* countries       - 3166 (all lang avalable at gem countries)
+* subdivisions    - 3166-2 (на русском)
+* cities          - parse from api.vk.com
+
+#### Why I need it?
+
+* small embedded and standalone app
+* use it with my cascade select2
+* learn how to integrate sinatra in rails
+
 
 Configuration
 -------------
@@ -21,8 +31,21 @@ Embedding in a Rails app
 routes.rb
 
 ``` ruby
-mount IsoView::Server, :at => "/iso"
+  mount IsoView::Server, :at => "/iso"
+  get "/countries/:lang?" => IsoView::Server
+  get "/subdivisions/:country/:lang?" => IsoView::Server
+  get "/cities/:country/:subdivision/:lang?" => IsoView::Server
 ```
+
+example
+
+    http://127.0.0.1:3000/iso/countries/en
+    http://127.0.0.1:3000/iso/subdivisions/ru/ru
+    http://127.0.0.1:3000/iso/cities/RU/KHA/ru
+
+`:lang?` - translation you prefer
+
+run as standalone
 
     iso_view
 
