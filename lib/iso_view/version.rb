@@ -1,3 +1,3 @@
 module IsoView
-  VERSION = "4.4.0"
+  VERSION = "1.1.0"
 end
