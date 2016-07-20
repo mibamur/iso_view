@@ -55,7 +55,7 @@ or from a Rails app:
 
 (This will use the vegas gem to launch the Sinatra app on an available port.)
 
-Alternatively, a Rackup file is provided.  To use: cd into the beanstalkd_view directory and execute:
+Alternatively, a Rackup file is provided.  To use: cd into the bin directory and execute:
 
 rackup
 
