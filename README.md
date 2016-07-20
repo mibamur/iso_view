@@ -21,7 +21,7 @@ Configuration
 To use in a Rails app, include the gem in your Gemfile:
 
 ``` ruby
-gem iso_view
+gem 'iso_view'
 ```
 
 
